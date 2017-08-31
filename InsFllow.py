@@ -1,18 +1,12 @@
-#!/usr/bin/python3.5
+#!/usr/bin/python2.7
 # -*- coding: utf-8 -*-
+from datetime import datetime
 from selenium import webdriver
 import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
-
-
-# from pyvirtualdisplay import Display
-#
-# # initiate virtual display
-# display = Display(visible=0, size=(1080, 920))
-# display.start()
 
 
 def loginToAccount(UsrName, Password):
@@ -31,14 +25,16 @@ def loginToAccount(UsrName, Password):
     time.sleep(2)
     print (driver.title).encode('utf-8')
     print (driver.current_url)
-    
-      ## DELETE AFTER
+
+    ## IF SECURITY CODE IS NEEDED - IT EMAILS AND YOU HAVE TO CHANGE BY YOURSELF AND DEPLOY
     try:
-        
-        submit_button = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, "//button[contains(.,'Send Security Code')]"))) 
+
+        submit_button = WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located((By.XPATH, "//button[contains(.,'Send Security Code')]")))
         submit_button.click()
         time.sleep(10)
-        codee = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, "//input[@name='securityCode']")))
+        codee = WebDriverWait(driver, 3).until(
+            EC.presence_of_element_located((By.XPATH, "//input[@name='securityCode']")))
         codee.send_keys('809532')
         codee.send_keys(u'\ue007')
         time.sleep(20)
@@ -50,19 +46,19 @@ def loginToAccount(UsrName, Password):
         user = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, "//input[@name='username']")))
         user.send_keys(UsrName)
         time.sleep(1)
-        passwordd = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, "//input[@name='password']")))
+        passwordd = WebDriverWait(driver, 3).until(
+            EC.presence_of_element_located((By.XPATH, "//input[@name='password']")))
         passwordd.send_keys(Password)
         time.sleep(1)
         driver.find_element_by_xpath("//button[contains(.,'Log in')]").click()
         time.sleep(2)
         print driver.title.encode('utf-8')
         print (driver.current_url)
-        
+
     except:
-            pass
-     
-    
-   
+        pass
+
+
 def enterCelebrityAccountFollowers(url):
     ## GOES TO THE CELEBRITY ACCOUNT
     driver.get(url)
@@ -96,11 +92,25 @@ def waitUntilTimeReached(FirstTime, SecondTime, TimeDesiredToSleep):
         return SleepingTime
 
 
-def followActiveAccount():
-    AmountOfActiveFollowed = 0
-    AmountOfFectiveFollowed = 0
+def GoLatestPostInsideSomeAccount():
+
+    latest_postUrl = WebDriverWait(driver, 2).until(EC.presence_of_all_elements_located(
+        (By.XPATH, "//*[@class='_mck9w _gvoze _f2mse']")))[0].find_element_by_tag_name('a').get_attribute('href')  ## NEEDS TO CHANGE !!!!!!!!!
+
+    driver.get(latest_postUrl)
+
+
+def days_between(d1, d2):
+    d1 = datetime.strptime(d1, "%Y-%m-%d")
+    d2 = datetime.strptime(d2, "%Y-%m-%d")
+    return abs((d2 - d1).days)
+
+
+
+def LikeActiveAccount():
+    AmountOfActiveLikes = 0
+    AmountOfFectiveLikes = 0
     index = 0
-    FollowedUrList = []
 
     enterCelebrityAccountFollowers(celebrityAccountURL)
     getInsideSomeAccount(index)
@@ -108,118 +118,124 @@ def followActiveAccount():
     WebDriverWait(driver, 5).until(EC.presence_of_element_located(
         (By.CLASS_NAME, '_fd86t')))  ##ELEMENT NEEDS CHANGE* WAITS UNTIL THE AMOUNT POSTS ELEMENT IS AVAILABLE
 
-    print ("Site At Profile: "),driver.title.encode('utf-8')
     time.sleep(2)
 
-    for y in range(0, 12):
-        for x in range(0, 80): 
+    print ("Site At Profile: "), driver.title.encode('utf-8')
 
-            follow_button = driver.find_element_by_xpath("//button[contains(.,'Follow')]")  ## NO NEED TO CHANGE ELEMENT
-            
-            FollowedUrList.append(driver.current_url)
+    while True:
+        try:
+            GoLatestPostInsideSomeAccount()
+            time.sleep(2)
+            print ("Site At Post From: "), driver.title.encode('utf-8')
+            break
 
-            follow_button.click()
-            WebDriverWait(driver, 10).until(EC.presence_of_element_located(
-                (By.XPATH, "//button[contains(.,'Following') or contains(.,'Requested')]")))
-            
+        except:
+            enterCelebrityAccountFollowers(celebrityAccountURL)
+            index = 0
+            getInsideSomeAccount(index)
+            time.sleep(2)
+            print ("Site At Profile: "), driver.title.encode('utf-8')
+
+    for y in range(0, 24):
+        for x in range(0, 40):
+
+            Heart_Button = WebDriverWait(driver, 2).until(EC.presence_of_element_located(
+                (By.XPATH, ("//span[text()='Like']"))))
+
+            Heart_Button.click()  ## DOES THE LIKE
+
             now = time.time()
+
+            ## WAITS UNTIL THE LIKE IS DONE
+            WebDriverWait(driver, 2).until(EC.presence_of_element_located(
+                (By.XPATH, ("//span[text()='Unlike']"))))
+
+            AmountOfFectiveLikes += 1
 
             enterCelebrityAccountFollowers(celebrityAccountURL)
             index = 0
-
             while True:
 
                 try:
                     getInsideSomeAccount(index)
                     time.sleep(2)
-                    WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.CLASS_NAME,
-                                                                                   '_fd86t')))  ##ELEMENT NEEDS CHANGE* WAITS UNTIL THE AMOUNT POSTS ELEMENT IS AVAILABLE
-                    print ("Site At Profile: "),driver.title.encode('utf-8')
+                    print ("Site At Profile: "), driver.title.encode('utf-8')
+
+                    ## CHECKS IF ITS PRIVATE
+
+                    WebDriverWait(driver, 2).until(
+                        EC.presence_of_all_elements_located((By.XPATH, "//*[@class='_mck9w _gvoze _f2mse']")))[0] \
+                        .find_element_by_tag_name('a').get_attribute('href')  ## NEEDS TO CHANGE !!!!!
 
                     PostAmount = driver.find_element_by_class_name('_fd86t').text
-                    print ('Number Of Posts: '),PostAmount
+                    print ('Number Of Posts: '), PostAmount
 
                     follow_button1 = driver.find_elements_by_xpath(
                         "//button[contains(.,'Following')]")  ## NO NEED TO CHANGE ELEMENT
                     follow_button2 = driver.find_elements_by_xpath(
                         "//button[contains(.,'Requested')]")  ## NO NEED TO CHANGE ELEMENT
 
+
                     ## CHECKS IF ACCOUNT HAS NOT ALREADY BEEN FOLLOWED
                     if follow_button1.__len__() == 0 and follow_button2.__len__() == 0:
 
                         after = time.time()
 
-                        if int(after) - int(now) > 44:  ##THERE IS A TIME.SLEEP FOR 2 SEC
-                            AmountOfFectiveFollowed += 1
-                            print ('Fictive Follow: '),AmountOfFectiveFollowed
+                        if int(after) - int(now) > 89:
+                            GoLatestPostInsideSomeAccount()
+                            AmountOfFectiveLikes += 1
+                            print ('Fictive Likes: '), AmountOfFectiveLikes
                             break
 
-                        ## CHECKS IF ACCOUNT HAS MORE THAN 40 POSTS - IF DOES, FOLLOWED
                         elif 40 <= int(PostAmount) < 200:
-                            print ('Active Follow: '),AmountOfActiveFollowed
-                            after = time.time()
-                            LoadingTime = waitUntilTimeReached(now, after, 44)
-                            time.sleep(LoadingTime)
-                            AmountOfActiveFollowed += 1
-                            break
+                            GoLatestPostInsideSomeAccount()
 
-                    ## IF, ONE OF THE IF'S STATEMENTS ARE FALSE, DRIVER GOES BACK TO LIST TO TRY NEXT ACCOUNT
+                            ## THIS CALCULATES THE DAYS BETWEEN TODAY AND THE UPLOAD DATE (AND PUTS IT IN CORRECT FORM)
+                            date_from_post = WebDriverWait(driver, 2)\
+                                .until(EC.presence_of_element_located((By.TAG_NAME, 'time'))) ## NO NEED TO CHANGE
+                            UploadDate = date_from_post.get_attribute('datetime')  ## NO NEED TO CHANGE
+                            UploadDate_Correct_Form = UploadDate.split('T')[0]
+                            Today = datetime.today().strftime("%Y-%m-%d")
+                            Today_Correct_Form = '{}'.format(Today)
+                            Days_Difference = days_between(UploadDate_Correct_Form, Today_Correct_Form)
+
+                            if Days_Difference < 21:
+                                print ('Active Likes: '), AmountOfActiveLikes
+                                AmountOfActiveLikes += 1
+                                after = time.time()
+                                LoadingTime = waitUntilTimeReached(now, after, 90)
+                                time.sleep(LoadingTime)
+                                break
+
+                            else:
+                                enterCelebrityAccountFollowers(celebrityAccountURL)
+                                index = 0
+
+                        else:
+                            ## IF, ONE OF THE IF'S STATEMENTS ARE FALSE, DRIVER GOES BACK TO LIST TO TRY NEXT ACCOUNT
+                            index += 1
+
+                            ## AFTER 20 PROFILES, LIST INDEX WILL BE OUT OF RANGE, SO THIS WILL HANDLE
+                            if index > 19:
+                                index = 0
+                                enterCelebrityAccountFollowers(celebrityAccountURL)
+
+                            else:
+                                driver.back()
+
+                except:
+                    driver.back()
                     index += 1
+                    getInsideSomeAccount(index)
 
-                    ## AFTER 20 PROFILES, LIST INDEX WILL BE OUT OF RANGE, SO THIS WILL HANDLE
-                    if index > 19:
-                        index = 0
-                        enterCelebrityAccountFollowers(celebrityAccountURL)
+    sumLikes = AmountOfActiveLikes + AmountOfFectiveLikes
+    print ("NUMBER OF LIKES DONE FOR TODAY: "), sumLikes
 
-                    else:
-                        driver.back()
-
-                except Exception as e:
-                    print (e)
-                    enterCelebrityAccountFollowers(celebrityAccountURL)
-                    index = 0
-
-    print ("TODAY PROGRAM FOLLOWED: "),FollowedUrList.__len__()
-    return FollowedUrList
-
-
-def Unfollow(FollowedUrList):
-    Unfollowed = 0
-
-    now = time.time()
-
-    for url in FollowedUrList:
-        try:
-            driver.get(url)
-            
-            after = time.time()
-
-            LoadingTime = waitUntilTimeReached(now, after, 44)
-            time.sleep(LoadingTime)
-                    
-            Unfollow_button = WebDriverWait(driver, 2).until(EC.presence_of_element_located(
-                    (By.XPATH, "//button[contains(.,'Following') or contains(.,'Requested')]")))
-
-            Unfollow_button.click()
-
-            WebDriverWait(driver, 5).until(EC.presence_of_element_located(
-                (By.XPATH, "//button[contains(.,'Follow')]")))
-            
-            now = time.time()
-
-            Unfollowed += 1
-            print ('Unfollowed '),Unfollowed,('accounts')
-
-        except Exception as e:
-            print (e)
-            pass
-
-    print ('UNFOLLOWED ACCOUNTS FOR TODAY:'),Unfollowed
-
-
-username = 'onpoint_facts'
+username = 'alpha__millionaire'
 password = '158158123'
-celebrityAccountURL = 'https://www.instagram.com/luissuarez9/'
+celebrityAccountURL = 'https://www.instagram.com/garethbale11/'
+
+CounterUntilOneDay = 0
 
 GOOGLE_CHROME_BIN = r"/app/.apt/usr/bin/google-chrome"
 CHROMEDRIVER_PATH = r"/app/.chromedriver/bin/chromedriver"
@@ -229,13 +245,9 @@ chrome_options.binary_location = GOOGLE_CHROME_BIN
 chrome_options.add_argument('--disable-gpu')
 chrome_options.add_argument('--no-sandbox')
 driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, chrome_options=chrome_options)
-
 driver.maximize_window()
 
 loginToAccount(username, password)
 
 while True:
-    Followed = followActiveAccount()
-    Unfollow(Followed)
-
-  
+    LikeActiveAccount()
