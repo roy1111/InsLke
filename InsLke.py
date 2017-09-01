@@ -67,7 +67,7 @@ def enterCelebrityAccountFollowers(url):
     Followers_button = WebDriverWait(driver, 5).until(
         EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, 'followers')))
     Followers_button.click()
-    print (driver.title).encode('utf-8')
+#     print (driver.title).encode('utf-8')
 
 
 def getInsideSomeAccount(index):
@@ -120,13 +120,13 @@ def LikeActiveAccount():
 
     time.sleep(2)
 
-    print ("Site At Profile: "), driver.title.encode('utf-8')
+#     print ("Site At Profile: "), driver.title.encode('utf-8')
 
     while True:
         try:
             GoLatestPostInsideSomeAccount()
             time.sleep(2)
-            print ("Site At Post From: "), driver.title.encode('utf-8')
+#             print ("Site At Post From: "), driver.title.encode('utf-8')
             break
 
         except:
@@ -134,9 +134,12 @@ def LikeActiveAccount():
             index = 0
             getInsideSomeAccount(index)
             time.sleep(2)
-            print ("Site At Profile: "), driver.title.encode('utf-8')
+#             print ("Site At Profile: "), driver.title.encode('utf-8')
 
     for y in range(0, 24):
+        
+        print datetime.today()
+
         for x in range(0, 40):
 
             Heart_Button = WebDriverWait(driver, 2).until(EC.presence_of_element_located(
@@ -159,7 +162,7 @@ def LikeActiveAccount():
                 try:
                     getInsideSomeAccount(index)
                     time.sleep(2)
-                    print ("Site At Profile: "), driver.title.encode('utf-8')
+#                     print ("Site At Profile: "), driver.title.encode('utf-8')
 
                     ## CHECKS IF ITS PRIVATE
 
@@ -168,7 +171,7 @@ def LikeActiveAccount():
                         .find_element_by_tag_name('a').get_attribute('href')  ## NEEDS TO CHANGE !!!!!
 
                     PostAmount = driver.find_element_by_class_name('_fd86t').text
-                    print ('Number Of Posts: '), PostAmount
+#                     print ('Number Of Posts: '), PostAmount
 
                     follow_button1 = driver.find_elements_by_xpath(
                         "//button[contains(.,'Following')]")  ## NO NEED TO CHANGE ELEMENT
@@ -184,7 +187,7 @@ def LikeActiveAccount():
                         if int(after) - int(now) > 89:
                             GoLatestPostInsideSomeAccount()
                             AmountOfFectiveLikes += 1
-                            print ('Fictive Likes: '), AmountOfFectiveLikes
+#                             print ('Fictive Likes: '), AmountOfFectiveLikes
                             break
 
                         elif 40 <= int(PostAmount) < 200:
@@ -200,7 +203,7 @@ def LikeActiveAccount():
                             Days_Difference = days_between(UploadDate_Correct_Form, Today_Correct_Form)
 
                             if Days_Difference < 21:
-                                print ('Active Likes: '), AmountOfActiveLikes
+#                                 print ('Active Likes: '), AmountOfActiveLikes
                                 AmountOfActiveLikes += 1
                                 after = time.time()
                                 LoadingTime = waitUntilTimeReached(now, after, 90)
