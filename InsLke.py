@@ -233,8 +233,8 @@ def LikeActiveAccount():
     sumLikes = AmountOfActiveLikes + AmountOfFectiveLikes
     print ("NUMBER OF LIKES DONE FOR TODAY: "), sumLikes
 
-username = 'onpoint_facts'
-password = '158158123'
+username = 'beautty_zone'
+password = '158158123123'
 celebrityAccountURL = 'https://www.instagram.com/garethbale11/'
 
 CounterUntilOneDay = 0
