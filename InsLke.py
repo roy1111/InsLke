@@ -233,7 +233,7 @@ def LikeActiveAccount():
     sumLikes = AmountOfActiveLikes + AmountOfFectiveLikes
     print ("NUMBER OF LIKES DONE FOR TODAY: "), sumLikes
 
-username = 'alpha__millionaire'
+username = 'onpoint_facts'
 password = '158158123'
 celebrityAccountURL = 'https://www.instagram.com/garethbale11/'
 
