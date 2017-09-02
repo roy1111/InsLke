@@ -148,6 +148,9 @@ def LikeActiveAccount():
             Heart_Button.click()  ## DOES THE LIKE
 
             now = time.time()
+            
+            time.sleep(2)
+            driver.refresh()
 
             ## WAITS UNTIL THE LIKE IS DONE
             WebDriverWait(driver, 2).until(EC.presence_of_element_located(
