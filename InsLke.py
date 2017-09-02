@@ -147,7 +147,7 @@ def LikeActiveAccount():
             
             after = time.time()
             
-            LoadingTime = waitUntilTimeReached(now, after, 90)
+            LoadingTime = waitUntilTimeReached(now, after, 89)
             
             time.sleep(LoadingTime)
 
@@ -262,4 +262,11 @@ driver.maximize_window()
 loginToAccount(username, password)
 
 while True:
+#     noww = time.time()
     LikeActiveAccount()
+    
+#     afterr = time.time()
+#     LoadinggTime = waitUntilTimeReached(noww, afterr, 86520)
+#     time.sleep(LoadinggTime)
+
+  
