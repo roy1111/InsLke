@@ -35,7 +35,7 @@ def loginToAccount(UsrName, Password):
         time.sleep(10)
         codee = WebDriverWait(driver, 3).until(
             EC.presence_of_element_located((By.XPATH, "//input[@name='securityCode']")))
-        codee.send_keys('801324')
+        codee.send_keys('871024')
         codee.send_keys(u'\ue007')
         time.sleep(20)
 
@@ -239,8 +239,8 @@ def LikeActiveAccount():
     sumLikes = AmountOfActiveLikes + AmountOfFectiveLikes
     print ("NUMBER OF LIKES DONE FOR TODAY: "), sumLikes
 
-username = 'onpoint_facts'
-password = '158158123'
+username = 'beautty_zone'
+password = '158123RA'
 celebrityAccountURL = 'https://www.instagram.com/garethbale11/'
 
 CounterUntilOneDay = 0
