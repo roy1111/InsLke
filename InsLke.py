@@ -144,6 +144,12 @@ def LikeActiveAccount():
 
             Heart_Button = WebDriverWait(driver, 2).until(EC.presence_of_element_located(
                 (By.XPATH, ("//span[text()='Like']"))))
+            
+            after = time.time()
+            
+            LoadingTime = waitUntilTimeReached(now, after, 90)
+            
+            time.sleep(LoadingTime)
 
             Heart_Button.click()  ## DOES THE LIKE
 
@@ -187,7 +193,7 @@ def LikeActiveAccount():
 
                         after = time.time()
 
-                        if int(after) - int(now) > 89:
+                        if int(after) - int(now) > 75:
                             GoLatestPostInsideSomeAccount()
                             AmountOfFectiveLikes += 1
 #                             print ('Fictive Likes: '), AmountOfFectiveLikes
@@ -208,9 +214,6 @@ def LikeActiveAccount():
                             if Days_Difference < 21:
 #                                 print ('Active Likes: '), AmountOfActiveLikes
                                 AmountOfActiveLikes += 1
-                                after = time.time()
-                                LoadingTime = waitUntilTimeReached(now, after, 90)
-                                time.sleep(LoadingTime)
                                 break
 
                             else:
