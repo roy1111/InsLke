@@ -111,6 +111,7 @@ def LikeActiveAccount():
     AmountOfActiveLikes = 0
     AmountOfFectiveLikes = 0
     index = 0
+    now = time.time()
 
     enterCelebrityAccountFollowers(celebrityAccountURL)
     getInsideSomeAccount(index)
