@@ -195,7 +195,7 @@ def LikeActiveAccount():
 #                             print ('Fictive Likes: '), AmountOfFectiveLikes
                             break
 
-                        elif 40 <= int(PostAmount) < 200:
+                        elif 40 <= PostAmount < 200:
                             GoLatestPostInsideSomeAccount()
 
                             ## THIS CALCULATES THE DAYS BETWEEN TODAY AND THE UPLOAD DATE (AND PUTS IT IN CORRECT FORM)
@@ -232,7 +232,8 @@ def LikeActiveAccount():
                     print e
                     enterCelebrityAccountFollowers(celebrityAccountURL)
                     index += 1
-                    getInsideSomeAccount(index)
+                    if index > 19:
+                        index = 0
         
         EndHour = time.time()
         LoadingggTime = waitUntilTimeReached(StartHour, EndHour, 3600)
