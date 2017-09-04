@@ -144,7 +144,7 @@ def LikeActiveAccount():
 
         for x in range(0, 40):
 
-            Heart_Button = WebDriverWait(driver, 2).until(EC.presence_of_element_located(
+            Heart_Button = WebDriverWait(driver, 10).until(EC.presence_of_element_located(
                 (By.XPATH, ("//span[text()='Like']"))))
             
             after = time.time()
@@ -171,9 +171,8 @@ def LikeActiveAccount():
 
                     ## CHECKS IF ITS PRIVATE
 
-                    WebDriverWait(driver, 2).until(
-                        EC.presence_of_all_elements_located((By.XPATH, "//*[@class='_mck9w _gvoze _f2mse']")))[0] \
-                        .find_element_by_tag_name('a').get_attribute('href')  ## NEEDS TO CHANGE !!!!!
+                    WebDriverWait(driver, 5).until(
+                        EC.presence_of_all_elements_located((By.XPATH, "//*[@class='_mck9w _gvoze _f2mse']")))[0] 
 
                     PostAmount = driver.find_element_by_class_name('_fd86t').text
 #                     print ('Number Of Posts: '), PostAmount
@@ -189,7 +188,7 @@ def LikeActiveAccount():
 
                         after = time.time()
 
-                        if int(after) - int(now) > 82:
+                        if int(after) - int(now) > 68:
                             GoLatestPostInsideSomeAccount()
                             AmountOfFectiveLikes += 1
 #                             print ('Fictive Likes: '), AmountOfFectiveLikes
@@ -199,7 +198,7 @@ def LikeActiveAccount():
                             GoLatestPostInsideSomeAccount()
 
                             ## THIS CALCULATES THE DAYS BETWEEN TODAY AND THE UPLOAD DATE (AND PUTS IT IN CORRECT FORM)
-                            date_from_post = WebDriverWait(driver, 2)\
+                            date_from_post = WebDriverWait(driver, 5)\
                                 .until(EC.presence_of_element_located((By.TAG_NAME, 'time'))) ## NO NEED TO CHANGE
                             UploadDate = date_from_post.get_attribute('datetime')  ## NO NEED TO CHANGE
                             UploadDate_Correct_Form = UploadDate.split('T')[0]
