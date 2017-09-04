@@ -158,12 +158,6 @@ def LikeActiveAccount():
             now = time.time()
             
             time.sleep(2)
-            driver.refresh()
-
-            ## WAITS UNTIL THE LIKE IS DONE
-            WebDriverWait(driver, 2).until(EC.presence_of_element_located(
-                (By.XPATH, ("//span[text()='Unlike']"))))
-
             AmountOfFectiveLikes += 1
 
             enterCelebrityAccountFollowers(celebrityAccountURL)
@@ -234,8 +228,9 @@ def LikeActiveAccount():
                             else:
                                 driver.back()
 
-                except:
-                    driver.back()
+                except Exception as e:
+                    print e
+                    enterCelebrityAccountFollowers(celebrityAccountURL)
                     index += 1
                     getInsideSomeAccount(index)
         
