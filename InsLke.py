@@ -139,6 +139,7 @@ def LikeActiveAccount():
     for y in range(0, 24):
         
         print datetime.today()
+        StartHour = time.time()
 
         for x in range(0, 40):
 
@@ -147,7 +148,7 @@ def LikeActiveAccount():
             
             after = time.time()
             
-            LoadingTime = waitUntilTimeReached(now, after, 89)
+            LoadingTime = waitUntilTimeReached(now, after, 88)
             
             time.sleep(LoadingTime)
 
@@ -193,7 +194,7 @@ def LikeActiveAccount():
 
                         after = time.time()
 
-                        if int(after) - int(now) > 75:
+                        if int(after) - int(now) > 82:
                             GoLatestPostInsideSomeAccount()
                             AmountOfFectiveLikes += 1
 #                             print ('Fictive Likes: '), AmountOfFectiveLikes
@@ -236,13 +237,17 @@ def LikeActiveAccount():
                     driver.back()
                     index += 1
                     getInsideSomeAccount(index)
-
+        
+        EndHour = time.time()
+        LoadingggTime = waitUntilTimeReached(StartHour, EndHour, 3600)
+        time.sleep(LoadingggTime)
+        
         print ("LIKED :"), (AmountOfFectiveLikes + AmountOfActiveLikes), ("ACCOUNTS THIS HOUR")
         
     sumLikes = AmountOfActiveLikes + AmountOfFectiveLikes
     print ("NUMBER OF LIKES DONE FOR TODAY: "), sumLikes
 
-username = 'beautty_zone'
+username = 'puberty_goals.09'
 password = '158123RA'
 celebrityAccountURL = 'https://www.instagram.com/garethbale11/'
 
