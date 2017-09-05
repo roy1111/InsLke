@@ -197,11 +197,11 @@ def LikeActiveAccount():
                             print ('Fictive Likes: '), AmountOfFectiveLikes
                             break
 
-                        elif 40 <= PostAmount < 200:
+                        elif 40 <= int(PostAmount) < 200:
 
                             GoLatestPostInsideSomeAccount()
 
-                            WebDriverWait(driver, 10).until(EC.presence_of_element_located(
+                            WebDriverWait(driver, 5).until(EC.presence_of_element_located(
                                 (By.XPATH, ("//span[text()='Like']"))))
 
                             date_from_post = driver.find_element_by_tag_name('time')
@@ -214,8 +214,13 @@ def LikeActiveAccount():
 
                             if Days_Difference < 21:
 
-                                print ('Active Likes: '), AmountOfActiveLikes
                                 AmountOfActiveLikes += 1
+                                print ('Active Likes: '), AmountOfActiveLikes
+
+                                after = time.time()
+                                LoadingTime = waitUntilTimeReached(now, after, 86)
+                                time.sleep(LoadingTime)
+
                                 break
 
                             else:
@@ -268,8 +273,8 @@ chrome_options.binary_location = GOOGLE_CHROME_BIN
 chrome_options.add_argument('--disable-gpu')
 chrome_options.add_argument('--no-sandbox')
 driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, chrome_options=chrome_options)
-
 driver.maximize_window()
+
 
 loginToAccount(username, password)
 
