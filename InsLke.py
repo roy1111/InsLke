@@ -35,7 +35,7 @@ def loginToAccount(UsrName, Password):
         time.sleep(10)
         codee = WebDriverWait(driver, 3).until(
             EC.presence_of_element_located((By.XPATH, "//input[@name='securityCode']")))
-        codee.send_keys('647928')
+        codee.send_keys('809532')
         codee.send_keys(u'\ue007')
         time.sleep(20)
 
@@ -67,7 +67,7 @@ def enterCelebrityAccountFollowers(url):
     Followers_button = WebDriverWait(driver, 5).until(
         EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, 'followers')))
     Followers_button.click()
-#     print (driver.title).encode('utf-8')
+    print (driver.title).encode('utf-8')
 
 
 def getInsideSomeAccount(index):
@@ -94,10 +94,11 @@ def waitUntilTimeReached(FirstTime, SecondTime, TimeDesiredToSleep):
 
 def GoLatestPostInsideSomeAccount():
 
-    latest_postUrl = WebDriverWait(driver, 2).until(EC.presence_of_all_elements_located(
-        (By.XPATH, "//*[@class='_mck9w _gvoze _f2mse']")))[0].find_element_by_tag_name('a').get_attribute('href')  ## NEEDS TO CHANGE !!!!!!!!!
+    latest_post = WebDriverWait(driver, 2).until(EC.presence_of_all_elements_located(
+        (By.XPATH, "//*[@class='_mck9w _gvoze _f2mse']")))[0]## NEEDS TO CHANGE !!!!!!!!!
 
-    driver.get(latest_postUrl)
+    latest_post.click()
+
 
 
 def days_between(d1, d2):
@@ -111,7 +112,6 @@ def LikeActiveAccount():
     AmountOfActiveLikes = 0
     AmountOfFectiveLikes = 0
     index = 0
-    now = time.time()
 
     enterCelebrityAccountFollowers(celebrityAccountURL)
     getInsideSomeAccount(index)
@@ -121,43 +121,39 @@ def LikeActiveAccount():
 
     time.sleep(2)
 
-#     print ("Site At Profile: "), driver.title.encode('utf-8')
+    print ("Site At Profile: "), driver.title.encode('utf-8')
 
     while True:
         try:
             GoLatestPostInsideSomeAccount()
-            time.sleep(2)
-#             print ("Site At Post From: "), driver.title.encode('utf-8')
+            time.sleep(10)
+            print ("Site At Post From: "), driver.title.encode('utf-8')
             break
 
         except:
-            enterCelebrityAccountFollowers(celebrityAccountURL)
-            index = 0
+            driver.back()
+            index += 1
             getInsideSomeAccount(index)
             time.sleep(2)
-#             print ("Site At Profile: "), driver.title.encode('utf-8')
+            print ("Site At Profile: "), driver.title.encode('utf-8')
 
     for y in range(0, 24):
-        
+
         print datetime.today()
-        StartHour = time.time()
+        startHour = time.time()
 
         for x in range(0, 40):
 
-            Heart_Button = WebDriverWait(driver, 10).until(EC.presence_of_element_located(
-                (By.XPATH, ("//span[text()='Like']"))))
-            
-            after = time.time()
-            
-            LoadingTime = waitUntilTimeReached(now, after, 88)
-            
-            time.sleep(LoadingTime)
+            Heart_Button = driver.find_element_by_xpath("//span[text()='Like']")
 
             Heart_Button.click()  ## DOES THE LIKE
 
             now = time.time()
-            
-            time.sleep(2)
+
+            ## WAITS UNTIL THE LIKE IS DONE
+            WebDriverWait(driver, 10).until(EC.presence_of_element_located(
+                (By.XPATH, ("//span[text()='Unlike']"))))
+
             AmountOfFectiveLikes += 1
 
             enterCelebrityAccountFollowers(celebrityAccountURL)
@@ -167,15 +163,17 @@ def LikeActiveAccount():
                 try:
                     getInsideSomeAccount(index)
                     time.sleep(2)
-#                     print ("Site At Profile: "), driver.title.encode('utf-8')
+                    print ("Site At Profile: "), driver.title.encode('utf-8')
+
+                    WebDriverWait(driver, 5).until(EC.presence_of_element_located(
+                        (By.CLASS_NAME,'_fd86t')))  ##ELEMENT NEEDS CHANGE* WAITS UNTIL THE AMOUNT POSTS ELEMENT IS AVAILABLE
 
                     ## CHECKS IF ITS PRIVATE
-
-                    WebDriverWait(driver, 5).until(
-                        EC.presence_of_all_elements_located((By.XPATH, "//*[@class='_mck9w _gvoze _f2mse']")))[0] 
+                    WebDriverWait(driver, 2).until(EC.presence_of_all_elements_located(
+                        (By.XPATH, ("//*[@class='_mck9w _gvoze _f2mse']"))))   ##CHECKS IF PRIVATE OR DOESNT HAVE ANY POSTS
 
                     PostAmount = driver.find_element_by_class_name('_fd86t').text
-#                     print ('Number Of Posts: '), PostAmount
+                    print ('Number Of Posts: '), PostAmount
 
                     follow_button1 = driver.find_elements_by_xpath(
                         "//button[contains(.,'Following')]")  ## NO NEED TO CHANGE ELEMENT
@@ -188,18 +186,26 @@ def LikeActiveAccount():
 
                         after = time.time()
 
-                        if int(after) - int(now) > 68:
+                        if int(after) - int(now) > 81:
+
                             GoLatestPostInsideSomeAccount()
+
+                            WebDriverWait(driver, 5).until(EC.presence_of_element_located(
+                                (By.XPATH, ("//span[text()='Like']"))))
+
                             AmountOfFectiveLikes += 1
-#                             print ('Fictive Likes: '), AmountOfFectiveLikes
+                            print ('Fictive Likes: '), AmountOfFectiveLikes
                             break
 
                         elif 40 <= PostAmount < 200:
+
                             GoLatestPostInsideSomeAccount()
 
-                            ## THIS CALCULATES THE DAYS BETWEEN TODAY AND THE UPLOAD DATE (AND PUTS IT IN CORRECT FORM)
-                            date_from_post = WebDriverWait(driver, 5)\
-                                .until(EC.presence_of_element_located((By.TAG_NAME, 'time'))) ## NO NEED TO CHANGE
+                            WebDriverWait(driver, 10).until(EC.presence_of_element_located(
+                                (By.XPATH, ("//span[text()='Like']"))))
+
+                            date_from_post = driver.find_element_by_tag_name('time')
+
                             UploadDate = date_from_post.get_attribute('datetime')  ## NO NEED TO CHANGE
                             UploadDate_Correct_Form = UploadDate.split('T')[0]
                             Today = datetime.today().strftime("%Y-%m-%d")
@@ -207,45 +213,50 @@ def LikeActiveAccount():
                             Days_Difference = days_between(UploadDate_Correct_Form, Today_Correct_Form)
 
                             if Days_Difference < 21:
-#                                 print ('Active Likes: '), AmountOfActiveLikes
+
+                                print ('Active Likes: '), AmountOfActiveLikes
                                 AmountOfActiveLikes += 1
                                 break
 
                             else:
-                                enterCelebrityAccountFollowers(celebrityAccountURL)
-                                index = 0
-
-                        else:
-                            ## IF, ONE OF THE IF'S STATEMENTS ARE FALSE, DRIVER GOES BACK TO LIST TO TRY NEXT ACCOUNT
-                            index += 1
-
-                            ## AFTER 20 PROFILES, LIST INDEX WILL BE OUT OF RANGE, SO THIS WILL HANDLE
-                            if index > 19:
-                                index = 0
-                                enterCelebrityAccountFollowers(celebrityAccountURL)
-
-                            else:
                                 driver.back()
 
-                except Exception as e:
-                    print e
-                    enterCelebrityAccountFollowers(celebrityAccountURL)
+
+                        index += 1
+
+                        ## AFTER 20 PROFILES, LIST INDEX WILL BE OUT OF RANGE, SO THIS WILL HANDLE
+                        if index > 19:
+                            index = 0
+                            enterCelebrityAccountFollowers(celebrityAccountURL)
+
+                        else:
+                            driver.back()
+
+                except Exception as e:  ##IF ITS A PRIVATE ACCOUNT
+
                     index += 1
+
                     if index > 19:
                         index = 0
-        
+                        enterCelebrityAccountFollowers(celebrityAccountURL)
+
+                    else:
+                        driver.back()
+
+
         EndHour = time.time()
-        LoadingggTime = waitUntilTimeReached(StartHour, EndHour, 3600)
-        time.sleep(LoadingggTime)
-        
-        print ("LIKED :"), (AmountOfFectiveLikes + AmountOfActiveLikes), ("ACCOUNTS THIS HOUR")
-        
-    sumLikes = AmountOfActiveLikes + AmountOfFectiveLikes
-    print ("NUMBER OF LIKES DONE FOR TODAY: "), sumLikes
+
+        LoadinggTimee = waitUntilTimeReached(startHour, EndHour, 3600)
+
+        time.sleep(LoadinggTimee)
+
+
+    print "AMOUNT OF LIKES DONE FOR TODAY ", (AmountOfActiveLikes + AmountOfFectiveLikes)
+
 
 username = 'puberty_goals.09'
 password = '158123RA'
-celebrityAccountURL = 'https://www.instagram.com/garethbale11/'
+celebrityAccountURL = 'https://www.instagram.com/shawnmendes/'
 
 CounterUntilOneDay = 0
 
@@ -263,11 +274,14 @@ driver.maximize_window()
 loginToAccount(username, password)
 
 while True:
-#     noww = time.time()
-    LikeActiveAccount()
-    
-#     afterr = time.time()
-#     LoadinggTime = waitUntilTimeReached(noww, afterr, 86520)
-#     time.sleep(LoadinggTime)
 
-  
+    Starting = time.time()
+
+    LikeActiveAccount()
+
+    Ending = time.time()
+    LoadingDay = waitUntilTimeReached(Starting, Ending, 86520)
+    time.sleep(LoadingDay)
+
+    print 'PROGRAM FINISHED FOR TODAY', datetime.today()
+
