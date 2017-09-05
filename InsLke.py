@@ -222,15 +222,15 @@ def LikeActiveAccount():
                                 driver.back()
 
 
-                        index += 1
+                    index += 1
 
-                        ## AFTER 20 PROFILES, LIST INDEX WILL BE OUT OF RANGE, SO THIS WILL HANDLE
-                        if index > 19:
-                            index = 0
-                            enterCelebrityAccountFollowers(celebrityAccountURL)
+                    ## AFTER 20 PROFILES, LIST INDEX WILL BE OUT OF RANGE, SO THIS WILL HANDLE
+                    if index > 19:
+                        index = 0
+                        enterCelebrityAccountFollowers(celebrityAccountURL)
 
-                        else:
-                            driver.back()
+                    else:
+                        driver.back()
 
                 except Exception as e:  ##IF ITS A PRIVATE ACCOUNT
 
