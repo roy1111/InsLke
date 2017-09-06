@@ -154,8 +154,6 @@ def LikeActiveAccount():
             WebDriverWait(driver, 10).until(EC.presence_of_element_located(
                 (By.XPATH, ("//span[text()='Unlike']"))))
 
-            AmountOfFectiveLikes += 1
-
             enterCelebrityAccountFollowers(celebrityAccountURL)
             index = 0
             while True:
