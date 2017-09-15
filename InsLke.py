@@ -121,7 +121,7 @@ def LikeActiveAccount():
 
     time.sleep(2)
 
-    print ("Site At Profile: "), driver.title.encode('utf-8')
+#     print ("Site At Profile: "), driver.title.encode('utf-8')
 
     while True:
         try:
@@ -135,7 +135,7 @@ def LikeActiveAccount():
             index += 1
             getInsideSomeAccount(index)
             time.sleep(2)
-            print ("Site At Profile: "), driver.title.encode('utf-8')
+#             print ("Site At Profile: "), driver.title.encode('utf-8')
 
     for y in range(0, 24):
 
@@ -161,7 +161,7 @@ def LikeActiveAccount():
                 try:
                     getInsideSomeAccount(index)
                     time.sleep(2)
-                    print ("Site At Profile: "), driver.title.encode('utf-8')
+#                     print ("Site At Profile: "), driver.title.encode('utf-8')
 
                     WebDriverWait(driver, 5).until(EC.presence_of_element_located(
                         (By.CLASS_NAME,'_fd86t')))  ##ELEMENT NEEDS CHANGE* WAITS UNTIL THE AMOUNT POSTS ELEMENT IS AVAILABLE
@@ -171,7 +171,7 @@ def LikeActiveAccount():
                         (By.XPATH, ("//*[@class='_mck9w _gvoze _f2mse']"))))   ##CHECKS IF PRIVATE OR DOESNT HAVE ANY POSTS
 
                     PostAmount = driver.find_element_by_class_name('_fd86t').text
-                    print ('Number Of Posts: '), PostAmount
+#                     print ('Number Of Posts: '), PostAmount
 
                     follow_button1 = driver.find_elements_by_xpath(
                         "//button[contains(.,'Following')]")  ## NO NEED TO CHANGE ELEMENT
