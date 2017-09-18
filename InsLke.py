@@ -142,7 +142,7 @@ def LikeActiveAccount():
         print datetime.today()
         startHour = time.time()
 
-        for x in range(0, 40):
+        for x in range(0, 37):
 
             Heart_Button = driver.find_element_by_xpath("//span[text()='Like']")
 
