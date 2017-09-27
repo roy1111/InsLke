@@ -287,5 +287,4 @@ while True:
     time.sleep(LoadingDay)
 
     print 'PROGRAM FINISHED FOR TODAY', datetime.today()
-    break
 
