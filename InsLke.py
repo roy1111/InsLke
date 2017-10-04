@@ -263,6 +263,17 @@ def LikeActiveAccount():
 
 
     print "AMOUNT OF LIKES DONE FOR TODAY ", (AmountOfActiveLikes + AmountOfFectiveLikes)
+    
+    
+def handleCookies(cookiesList):
+    driver.delete_all_cookies()
+    
+    for cookie in cookiesList:
+        try:
+            driver.add_cookie(cookie)
+
+        except:
+            pass
 
 
 username = 'puberty_goals.09'
@@ -283,12 +294,15 @@ driver.maximize_window()
 
 
 loginToAccount(username, password)
+cookies_list = driver.get_cookies()
+
 
 while True:
 
     Starting = time.time()
 
     LikeActiveAccount()
+    handleCookies(cookies_list)
 
     Ending = time.time()
     LoadingDay = waitUntilTimeReached(Starting, Ending, 86520)
