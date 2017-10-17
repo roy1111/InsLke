@@ -276,9 +276,9 @@ def handleCookies(cookiesList):
             pass
 
 
-username = 'ace.yourself'
+username = 'alpha__millionaire'
 password = '158158123'
-celebrityAccountURL = 'https://www.instagram.com/nickiminaj/'
+celebrityAccountURL = 'https://www.instagram.com/khloekardashian/'
 
 CounterUntilOneDay = 0
 
