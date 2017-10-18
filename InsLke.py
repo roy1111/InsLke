@@ -276,9 +276,9 @@ def handleCookies(cookiesList):
             pass
 
 
-username = 'ace.yourself'
+username = 'puberty_goals.09'
 password = '158158123'
-celebrityAccountURL = 'https://www.instagram.com/cristiano/'
+celebrityAccountURL = 'https://www.instagram.com/kyliejenner/'
 
 CounterUntilOneDay = 0
 
