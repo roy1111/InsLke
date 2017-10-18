@@ -277,7 +277,7 @@ def handleCookies(cookiesList):
 
 
 username = 'alpha__millionaire'
-password = '158158123
+password = '158158123'
 celebrityAccountURL = 'https://www.instagram.com/arianagrande/'
 
 CounterUntilOneDay = 0
