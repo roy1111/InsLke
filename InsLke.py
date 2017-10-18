@@ -294,19 +294,21 @@ driver.maximize_window()
 
 
 loginToAccount(username, password)
-cookies_list = driver.get_cookies()
+# cookies_list = driver.get_cookies()
 
 
 while True:
 
     Starting = time.time()
+    sta = datetime.today()
 
     LikeActiveAccount()
-    handleCookies(cookies_list)
+#     handleCookies(cookies_list)
 
     Ending = time.time()
     LoadingDay = waitUntilTimeReached(Starting, Ending, 86520)
     time.sleep(LoadingDay)
 
+    print 'PROGRAM STARTED FOR TODAY', sta
     print 'PROGRAM FINISHED FOR TODAY', datetime.today()
 
