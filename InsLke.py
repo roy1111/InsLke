@@ -192,7 +192,7 @@ def LikeActiveAccount():
 
                         after = time.time()
 
-                        if int(after) - int(now) > 81:
+                        if int(after) - int(now) > 75:
 
                             GoLatestPostInsideSomeAccount()
 
