@@ -12,7 +12,7 @@ from selenium.webdriver.chrome.options import Options
 def loginToAccount(UsrName, Password):
     ## GOES TO INSTAGRAM LOGIN PAGE
     driver.get('https://www.instagram.com/accounts/login/')
-    print (driver.title).encode('utf-8')
+    # print (driver.title).encode('utf-8')
 
     ## ENTERS THE USERNAME AND PASSWORD
     user = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, "//input[@name='username']")))
@@ -23,7 +23,7 @@ def loginToAccount(UsrName, Password):
     time.sleep(1)
     driver.find_element_by_xpath("//button[contains(.,'Log in')]").click()
     time.sleep(2)
-    print (driver.title).encode('utf-8')
+    # print (driver.title).encode('utf-8')
     print (driver.current_url)
 
     ## IF SECURITY CODE IS NEEDED - IT EMAILS AND YOU HAVE TO CHANGE BY YOURSELF AND DEPLOY
@@ -40,7 +40,7 @@ def loginToAccount(UsrName, Password):
         time.sleep(20)
 
         driver.get('https://www.instagram.com/accounts/login/')
-        print driver.title.encode('utf-8')
+        # print driver.title.encode('utf-8')
 
         ## ENTERS THE USERNAME AND PASSWORD
         user = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, "//input[@name='username']")))
@@ -52,7 +52,7 @@ def loginToAccount(UsrName, Password):
         time.sleep(1)
         driver.find_element_by_xpath("//button[contains(.,'Log in')]").click()
         time.sleep(2)
-        print driver.title.encode('utf-8')
+        # print driver.title.encode('utf-8')
         print (driver.current_url)
 
     except:
@@ -68,7 +68,7 @@ def enterCelebrityAccountFollowers(url):
         Followers_button = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, 'followers')))
         Followers_button.click()
-        print (driver.title).encode('utf-8')
+        # print (driver.title).encode('utf-8')
     
     except:
         print 'cant enter celebrity followers'
@@ -102,11 +102,10 @@ def waitUntilTimeReached(FirstTime, SecondTime, TimeDesiredToSleep):
 
 def GoLatestPostInsideSomeAccount():
 
-    latest_post = WebDriverWait(driver, 2).until(EC.presence_of_all_elements_located(
+    latest_post = WebDriverWait(driver, 5).until(EC.presence_of_all_elements_located(
         (By.XPATH, "//*[@class='_mck9w _gvoze _f2mse']")))[0]## NEEDS TO CHANGE !!!!!!!!!
 
     latest_post.click()
-
 
 
 def days_between(d1, d2):
@@ -135,7 +134,7 @@ def LikeActiveAccount():
         try:
             GoLatestPostInsideSomeAccount()
             time.sleep(10)
-            print ("Site At Post From: "), driver.title.encode('utf-8')
+            # print ("Site At Post From: "), driver.title.encode('utf-8')
             break
 
         except:
@@ -147,7 +146,7 @@ def LikeActiveAccount():
 
     for y in range(0, 24):
 
-        print datetime.today()
+        # print datetime.today()
         startHour = time.time()
 
         for x in range(0, 37):
@@ -192,7 +191,7 @@ def LikeActiveAccount():
 
                         after = time.time()
 
-                        if int(after) - int(now) > 75:
+                        if int(after) - int(now) > 75 and int(PostAmount) >= 1:
 
                             GoLatestPostInsideSomeAccount()
 
@@ -200,10 +199,10 @@ def LikeActiveAccount():
                                 (By.XPATH, ("//span[text()='Like']"))))
 
                             AmountOfFectiveLikes += 1
-                            print ('Fictive Likes: '), AmountOfFectiveLikes
+                            # print ('Fictive Likes: '), AmountOfFectiveLikes
                             break
 
-                        elif 40 <= int(PostAmount) < 200:
+                        elif 10 <= int(PostAmount) < 300:
 
                             GoLatestPostInsideSomeAccount()
 
@@ -221,7 +220,7 @@ def LikeActiveAccount():
                             if Days_Difference < 21:
 
                                 AmountOfActiveLikes += 1
-                                print ('Active Likes: '), AmountOfActiveLikes
+                                # print ('Active Likes: '), AmountOfActiveLikes
 
                                 after = time.time()
                                 LoadingTime = waitUntilTimeReached(now, after, 86)
@@ -276,9 +275,9 @@ def handleCookies(cookiesList):
             pass
 
 
-username = 'alpha__millionaire'
-password = '158158123'
-celebrityAccountURL = 'https://www.instagram.com/arianagrande/'
+username = 'puberty_goals.09'
+password = '158123RA'
+celebrityAccountURL = 'https://www.instagram.com/shawnmendes/'
 
 CounterUntilOneDay = 0
 
